@@ -18,6 +18,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        // @todo change 'name' to be 'first_name' and 'last_name'
+        // @todo save name fields to the UserProfile
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
 
@@ -50,6 +52,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser($user, array $input)
     {
+        // @todo change 'name' to be 'first_name' and 'last_name'
+        // @todo save name fields to the UserProfile
         $user->forceFill([
             'name' => $input['name'],
             'email' => $input['email'],

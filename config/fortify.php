@@ -132,14 +132,16 @@ return [
     */
 
     'features' => [
-        Features::registration(),
-        Features::resetPasswords(),
-        Features::emailVerification(),
-        Features::updateProfileInformation(),
-        Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirmPassword' => true,
-        ]),
+        // @todo go through each of these, and ensure 'name' fields are saved properly and endpoints work
+        // @todo consider how graphql aka lighthouse will come to play
+//        Features::registration(),
+//        Features::resetPasswords(),
+//        Features::emailVerification(),
+//        Features::updateProfileInformation(),
+//        Features::updatePasswords(),
+//        Features::twoFactorAuthentication([
+//            'confirmPassword' => true,
+//        ]),
     ],
 
 ];

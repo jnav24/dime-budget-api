@@ -20,6 +20,8 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        // @todo change 'name' to be 'first_name' and 'last_name'
+        // @todo save name fields to the UserProfile
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
