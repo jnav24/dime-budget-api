@@ -11,9 +11,11 @@ RUN apt-get update && apt-get install -y \
         libvpx-dev \
         libzip-dev \
     && pecl install xdebug \
+    && pecl install redis \
     && pecl install mcrypt-1.0.4 \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-enable mcrypt \
+    && docker-php-ext-enable redis \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) mysqli \
