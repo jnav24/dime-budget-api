@@ -30,7 +30,15 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ~/.docker/data/lumen-budget:/var/lib/mysql
+      - ~/.docker/data/lumen-budget/db:/var/lib/mysql
+
+  redis:
+    image: redis:6.0-alpine
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+      - ~/.docker/data/lumen-budget/redis:/var/lib/redis
+    ports:
+      - '6379:6379'
 
   composer:
     image: composer
