@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\UserProfile;
 use App\Models\UserVehicle;
+use Illuminate\Http\JsonResponse;
 use \Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return Response|JsonResponse
+     */
     public function updateUserProfile(Request $request)
     {
         try {

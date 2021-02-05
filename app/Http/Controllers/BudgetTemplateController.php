@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\BillType;
 use App\Models\BudgetTemplate;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Illuminate\Http\Request;
 
 class BudgetTemplateController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return Response|JsonResponse
+     */
     public function deleteBudgetTemplate(Request $request)
     {
         try {
@@ -48,6 +54,10 @@ class BudgetTemplateController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return Response|JsonResponse
+     */
     public function saveBudgetTemplates(Request $request)
     {
         try {
