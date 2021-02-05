@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use App\Helpers\APIResponse;
+use App\Traits\APIResponse;
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
