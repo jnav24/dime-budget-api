@@ -5,6 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Investment
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $amount
+ * @property int $investment_type_id
+ * @property int $budget_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\InvestmentType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Investment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Investment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Investment query()
+ * @mixin \Eloquent
+ */
 class Investment extends Model
 {
     /**

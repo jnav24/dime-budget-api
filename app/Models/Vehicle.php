@@ -5,6 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Vehicle
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property string $mileage
+ * @property string $amount
+ * @property int $due_date
+ * @property int $user_vehicle_id
+ * @property int $vehicle_type_id
+ * @property string|null $paid_date
+ * @property string|null $confirmation
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $not_track_amount
+ * @property string $balance
+ * @property-read \App\Models\VehicleType|null $type
+ * @property-read \App\Models\UserVehicle|null $userVehicle
+ * @method static \Illuminate\Database\Eloquent\Builder|Vehicle newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Vehicle newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Vehicle query()
+ * @mixin \Eloquent
+ */
 class Vehicle extends Model
 {
     /**

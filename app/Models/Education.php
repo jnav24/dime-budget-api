@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Education
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property int $education_type_id
+ * @property string $name
+ * @property string $amount
+ * @property string|null $confirmation
+ * @property int $not_track_amount
+ * @property int $due_date
+ * @property string|null $paid_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\EducationType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Education newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Education newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Education query()
+ * @mixin \Eloquent
+ */
 class Education extends Model
 {
     /**

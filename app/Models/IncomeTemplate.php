@@ -4,6 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\IncomeTemplate
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $amount
+ * @property int $budget_template_id
+ * @property int $income_type_id
+ * @property string $initial_pay_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|IncomeTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IncomeTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IncomeTemplate query()
+ * @mixin \Eloquent
+ */
 class IncomeTemplate extends Model
 {
     /**

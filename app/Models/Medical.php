@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Medical
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property string $name
+ * @property string $amount
+ * @property int $due_date
+ * @property int $medical_type_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $paid_date
+ * @property string|null $confirmation
+ * @property int $not_track_amount
+ * @property-read \App\Models\MedicalType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Medical newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Medical newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Medical query()
+ * @mixin \Eloquent
+ */
 class Medical extends Model
 {
     /**

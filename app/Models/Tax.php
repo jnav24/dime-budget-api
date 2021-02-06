@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Tax
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property int $tax_type_id
+ * @property string $name
+ * @property string $amount
+ * @property string|null $confirmation
+ * @property int $not_track_amount
+ * @property int $due_date
+ * @property string|null $paid_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\TaxType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Tax newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tax newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tax query()
+ * @mixin \Eloquent
+ */
 class Tax extends Model
 {
     /**

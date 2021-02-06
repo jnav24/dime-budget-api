@@ -4,6 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\EducationTemplate
+ *
+ * @property int $id
+ * @property int $budget_template_id
+ * @property int $education_type_id
+ * @property string $name
+ * @property string $amount
+ * @property int $due_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|EducationTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EducationTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EducationTemplate query()
+ * @mixin \Eloquent
+ */
 class EducationTemplate extends Model
 {
     /**

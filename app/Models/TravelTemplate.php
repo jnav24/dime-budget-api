@@ -4,6 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\TravelTemplate
+ *
+ * @property int $id
+ * @property int $budget_template_id
+ * @property int $travel_type_id
+ * @property string $name
+ * @property string $amount
+ * @property int $due_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|TravelTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TravelTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TravelTemplate query()
+ * @mixin \Eloquent
+ */
 class TravelTemplate extends Model
 {
     /**

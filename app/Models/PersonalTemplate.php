@@ -4,6 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\PersonalTemplate
+ *
+ * @property int $id
+ * @property int $budget_template_id
+ * @property int $personal_type_id
+ * @property string $name
+ * @property string $amount
+ * @property int $due_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|PersonalTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PersonalTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PersonalTemplate query()
+ * @mixin \Eloquent
+ */
 class PersonalTemplate extends Model
 {
     /**
