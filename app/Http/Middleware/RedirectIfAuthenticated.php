@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\APIResponse;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
+    use APIResponse;
+
     /**
      * Handle an incoming request.
      *
@@ -23,7 +26,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return response()->json(['success' => true], 200);
+                return $this->respondWithOK();
             }
         }
 
