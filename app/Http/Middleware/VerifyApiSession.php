@@ -6,6 +6,9 @@ use App\Traits\APIResponse;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Auth\AuthenticationException;
+use App\Models\User;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class VerifyApiSession
 {
@@ -14,34 +17,59 @@ class VerifyApiSession
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
+     * @throws AuthenticationException
      */
     public function handle(Request $request, Closure $next)
     {
         $tokenId = $request->bearerToken();
         $user = auth()->user();
-
-        if (empty($user) || empty($tokenId)) {
-            return $this->respondWithForbidden();
-        }
-
+        $this->verifyUserAndTokenId($user, $tokenId);
         $token = $user->tokens()->where('id', $tokenId)->first();
+        $this->verifyToken($token);
+        $this->verifyExpiration($user, $token);
+        return $next($request);
+    }
 
-        if (empty($token)) {
-            return $this->respondWithForbidden();
+    /**
+     * @param User $user
+     * @param string $tokenId
+     * @throws AuthenticationException
+     */
+    public function verifyUserAndTokenId(User $user, string $tokenId): void
+    {
+        if (empty($user) || empty($tokenId)) {
+            throw new AuthenticationException();
         }
+    }
 
+    /**
+     * @param PersonalAccessToken $token
+     * @throws AuthenticationException
+     */
+    public function verifyToken(PersonalAccessToken $token): void
+    {
+        if (empty($token)) {
+            throw new AuthenticationException();
+        }
+    }
+
+    /**
+     * @param User $user
+     * @param PersonalAccessToken $token
+     * @throws AuthenticationException
+     */
+    public function verifyExpiration(User $user, PersonalAccessToken $token): void
+    {
         $now = Carbon::now();
         $then = Carbon::createFromTimeString($token->created_at);
         $expired = $now->diffInMinutes($then) > (int) env('SESSION_LIFETIME', 120);
 
         if (empty($user->getRememberToken()) && $expired) {
             $token->delete();
-            return $this->respondWithForbidden();
+            throw new AuthenticationException();
         }
-
-        return $next($request);
     }
 }
