@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Traits\APIResponse;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
@@ -12,8 +11,6 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class VerifyApiSession
 {
-    use APIResponse;
-
     /**
      * Handle an incoming request.
      *
