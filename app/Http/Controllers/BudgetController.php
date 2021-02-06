@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BillTypes;
+use App\Models\BillType;
 use App\Models\BudgetAggregation;
-use App\Models\Budgets;
+use App\Models\Budget;
 use App\Models\IncomeType;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +19,7 @@ class BudgetController extends Controller
     public function getAllBudgets()
     {
         try {
-            $data = Budgets::where('user_id', auth()->user()->id)
+            $data = Budget::where('user_id', auth()->user()->id)
                 ->with(['aggregations' => function ($query) {
                     $query->where('type', 'saved');
                 }])
@@ -51,7 +51,7 @@ class BudgetController extends Controller
     public function getSingleBudgetExpenses($id)
     {
         try {
-            $sql = Budgets::where('user_id', auth()->user()->id)
+            $sql = Budget::where('user_id', auth()->user()->id)
                 ->where('id', $id)
                 ->with(['aggregations' => function ($query) {
                     $query->where('type', 'saved');
@@ -81,7 +81,7 @@ class BudgetController extends Controller
     public function saveBudget(Request $request)
     {
         try {
-            $this->validate($request, [
+            $request->validate($request, [
                 'name' => 'required',
                 'cycle' => 'required',
                 'expenses' => 'required',
@@ -94,7 +94,7 @@ class BudgetController extends Controller
             $expenses = $request->input('expenses');
             $id = $request->input('id', null);
 
-            $budget = Budgets::firstOrCreate(
+            $budget = Budget::firstOrCreate(
                 ['id' => $id],
                 [
                     'name' => $request->input('name'),
@@ -109,7 +109,7 @@ class BudgetController extends Controller
 
             $budget->updated_at = Carbon::now()->format('Y-m-d H:i:s');
             $budget->save();
-            $types = BillTypes::all();
+            $types = BillType::all();
             $returnExpenses = $this->saveExpenses($budget->id, $expenses);
 
             $this->setupAndSaveAggregation(
@@ -143,11 +143,11 @@ class BudgetController extends Controller
 
     public function deleteBudget($id) {
         try {
-            $types = BillTypes::all();
+            $types = BillType::all();
 
             DB::beginTransaction();
 
-            $budget = Budgets::where('id', $id)
+            $budget = Budget::where('id', $id)
                 ->where('user_id', auth()->user()->id)
                 ->first();
 
@@ -187,10 +187,10 @@ class BudgetController extends Controller
                 throw new \Exception('Expenses is either missing or value is not an array');
             }
 
-            $budget = Budgets::where('id', $id)
+            $budget = Budget::where('id', $id)
                 ->where('user_id', auth()->user()->id)
                 ->first();
-            $types = BillTypes::all();
+            $types = BillType::all();
 
             if (empty($budget)) {
                 throw new \Exception('Budget ' . $id . ' does not exist');
