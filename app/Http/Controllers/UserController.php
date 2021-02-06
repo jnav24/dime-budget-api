@@ -65,4 +65,16 @@ class UserController extends Controller
             return $this->respondWithBadRequest([], 'Unable to save user profile');
         }
     }
+
+    public function setApiToken()
+    {
+        $user = auth()->user();
+
+        if (empty($user)) {
+            $this->respondWithUnauthorized();
+        }
+
+        $token = $user->createToken($user->email);
+        return $this->respondWithOK(['token' => $token->plainTextToken]);
+    }
 }
