@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
 use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class VerifyApiSession
@@ -66,6 +67,7 @@ class VerifyApiSession
 
         if (empty($user->getRememberToken()) && $expired) {
             $token->delete();
+            Cookie::queue(Cookie::forget(env('COOKIE_NAME', 'access_token')));
             throw new AuthenticationException();
         }
     }

@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Cookie;
 
 class LogoutListener
 {
@@ -30,6 +31,7 @@ class LogoutListener
         $user = $event->user;
 
         if (!empty($user) && !empty($tokenId)) {
+            Cookie::queue(Cookie::forget(env('COOKIE_NAME', 'access_token')));
             $user->tokens()->where('id', $tokenId)->delete();
         }
     }

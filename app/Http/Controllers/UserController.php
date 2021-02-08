@@ -7,6 +7,7 @@ use App\Models\UserVehicle;
 use Illuminate\Http\JsonResponse;
 use \Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -75,6 +76,7 @@ class UserController extends Controller
         }
 
         $token = $user->createToken($user->email);
-        return $this->respondWithOK(['token' => $token->plainTextToken]);
+        Cookie::queue(Cookie::make(env('COOKIE_NAME', 'access_token'),  $token->plainTextToken, env('SESSION_LIFETIME', 120)));
+        return $this->respondWithOK();
     }
 }
