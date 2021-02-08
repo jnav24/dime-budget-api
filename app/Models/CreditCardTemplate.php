@@ -4,6 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\CreditCardTemplate
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $limit
+ * @property string $last_4
+ * @property string $exp_month
+ * @property string $exp_year
+ * @property string $apr
+ * @property int $due_date
+ * @property int $credit_card_type_id
+ * @property int $budget_template_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $amount
+ * @property string|null $balance
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCardTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCardTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCardTemplate query()
+ * @mixin \Eloquent
+ */
 class CreditCardTemplate extends Model
 {
     /**

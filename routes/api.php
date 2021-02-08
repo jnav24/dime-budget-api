@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'verify.session'])->group(function () {
     Route::get('budget-aggregate', [\App\Http\Controllers\BudgetAggregationController::class, 'getYearlyAggregation']);
     Route::get('current-budget-aggregate/{year}', [\App\Http\Controllers\BudgetAggregationController::class, 'getSingleYearAggregation']);
     Route::get('unpaid-aggregate', [\App\Http\Controllers\BudgetAggregationController::class, 'getCountOfUnPaidBills']);

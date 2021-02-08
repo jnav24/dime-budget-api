@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Personal
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property int $personal_type_id
+ * @property string $name
+ * @property string $amount
+ * @property string|null $confirmation
+ * @property int $not_track_amount
+ * @property int $due_date
+ * @property string|null $paid_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\PersonalType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Personal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Personal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Personal query()
+ * @mixin \Eloquent
+ */
 class Personal extends Model
 {
     /**

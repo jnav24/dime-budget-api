@@ -7,6 +7,7 @@ use App\Models\UserVehicle;
 use Illuminate\Http\JsonResponse;
 use \Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
@@ -64,5 +65,18 @@ class UserController extends Controller
             Log::error('UserController::updateUserProfile - ' . $e->getMessage());
             return $this->respondWithBadRequest([], 'Unable to save user profile');
         }
+    }
+
+    public function setApiToken()
+    {
+        $user = auth()->user();
+
+        if (empty($user)) {
+            $this->respondWithUnauthorized();
+        }
+
+        $token = $user->createToken($user->email);
+        Cookie::queue(Cookie::make(env('COOKIE_NAME', 'access_token'),  $token->plainTextToken, env('SESSION_LIFETIME', 120)));
+        return $this->respondWithOK();
     }
 }

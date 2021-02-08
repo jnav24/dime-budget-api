@@ -5,6 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Gift
+ *
+ * @property int $id
+ * @property int $budget_id
+ * @property int $gift_type_id
+ * @property string $name
+ * @property string $amount
+ * @property string|null $confirmation
+ * @property int $not_track_amount
+ * @property int $due_date
+ * @property string|null $paid_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\GiftType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Gift newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Gift newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Gift query()
+ * @mixin \Eloquent
+ */
 class Gift extends Model
 {
     /**

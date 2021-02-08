@@ -4,6 +4,62 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Budget
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $budget_cycle
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BudgetAggregation[] $aggregations
+ * @property-read int|null $aggregations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Bank[] $banks
+ * @property-read int|null $banks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Childcare[] $childcare
+ * @property-read int|null $childcare_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CreditCard[] $credit_cards
+ * @property-read int|null $credit_cards_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Education[] $education
+ * @property-read int|null $education_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Entertainment[] $entertainment
+ * @property-read int|null $entertainment_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Food[] $food
+ * @property-read int|null $food_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Gift[] $gift
+ * @property-read int|null $gift_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Housing[] $housing
+ * @property-read int|null $housing_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Income[] $incomes
+ * @property-read int|null $incomes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Investment[] $investments
+ * @property-read int|null $investments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Loan[] $loan
+ * @property-read int|null $loan_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Medical[] $medical
+ * @property-read int|null $medical_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Miscellaneous[] $miscellaneous
+ * @property-read int|null $miscellaneous_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Personal[] $personal
+ * @property-read int|null $personal_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Shopping[] $shopping
+ * @property-read int|null $shopping_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription[] $subscription
+ * @property-read int|null $subscription_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tax[] $tax
+ * @property-read int|null $tax_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Travel[] $travel
+ * @property-read int|null $travel_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Utility[] $utilities
+ * @property-read int|null $utilities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Vehicle[] $vehicles
+ * @property-read int|null $vehicles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Budget newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Budget newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Budget query()
+ * @mixin \Eloquent
+ */
 class Budget extends Model
 {
     /**

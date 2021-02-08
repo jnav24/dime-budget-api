@@ -4,6 +4,58 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\BudgetTemplate
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BankTemplate[] $banks
+ * @property-read int|null $banks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChildcareTemplate[] $childcare
+ * @property-read int|null $childcare_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CreditCardTemplate[] $credit_cards
+ * @property-read int|null $credit_cards_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EducationTemplate[] $education
+ * @property-read int|null $education_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\EntertainmentTemplate[] $entertainment
+ * @property-read int|null $entertainment_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FoodTemplate[] $food
+ * @property-read int|null $food_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GiftTemplate[] $gift
+ * @property-read int|null $gift_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\HousingTemplate[] $housing
+ * @property-read int|null $housing_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IncomeTemplate[] $incomes
+ * @property-read int|null $incomes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InvestmentTemplate[] $investments
+ * @property-read int|null $investments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LoanTemplate[] $loan
+ * @property-read int|null $loan_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MedicalTemplate[] $medical
+ * @property-read int|null $medical_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MiscellaneousTemplate[] $miscellaneous
+ * @property-read int|null $miscellaneous_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PersonalTemplate[] $personal
+ * @property-read int|null $personal_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ShoppingTemplate[] $shopping
+ * @property-read int|null $shopping_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SubscriptionTemplate[] $subscription
+ * @property-read int|null $subscription_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TaxTemplate[] $tax
+ * @property-read int|null $tax_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TravelTemplate[] $travel
+ * @property-read int|null $travel_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UtilityTemplate[] $utilities
+ * @property-read int|null $utilities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VehicleTemplate[] $vehicles
+ * @property-read int|null $vehicles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|BudgetTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BudgetTemplate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BudgetTemplate query()
+ * @mixin \Eloquent
+ */
 class BudgetTemplate extends Model
 {
     /**

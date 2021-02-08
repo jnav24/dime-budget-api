@@ -5,6 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\CreditCard
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $limit
+ * @property string $last_4
+ * @property string $exp_month
+ * @property string $exp_year
+ * @property string $apr
+ * @property int $due_date
+ * @property int $credit_card_type_id
+ * @property int $budget_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $paid_date
+ * @property string|null $confirmation
+ * @property string|null $amount
+ * @property string|null $balance
+ * @property-read \App\Models\CreditCardType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCard newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCard newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CreditCard query()
+ * @mixin \Eloquent
+ */
 class CreditCard extends Model
 {
     /**

@@ -5,6 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * App\Models\Bank
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $amount
+ * @property int $bank_type_id
+ * @property int $budget_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $bank_template_id
+ * @property-read \App\Models\BankType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Bank newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Bank newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Bank query()
+ * @mixin \Eloquent
+ */
 class Bank extends Model
 {
     /**
