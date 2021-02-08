@@ -21,13 +21,13 @@ use App\Http\Controllers\UserController;
 */
 
 Route::middleware(['auth:sanctum', 'verify.session'])->group(function () {
-    Route::get('budget-aggregate', [BudgetAggregationController::class, 'getYearlyAggregation']);
-    Route::get('current-budget-aggregate/{year}', [BudgetAggregationController::class, 'getSingleYearAggregation']);
-    Route::get('unpaid-aggregate', [BudgetAggregationController::class, 'getCountOfUnPaidBills']);
+    Route::get('budget-aggregates', [BudgetAggregationController::class, 'index']);
+    Route::get('budget-aggregates/unpaid', [BudgetAggregationController::class, 'getCountOfUnPaidBills']);
+    Route::get('budget-aggregates/{year}', [BudgetAggregationController::class, 'show']);
     Route::resource('budgets', BudgetController::class);
     Route::delete('budget-expense/{id}', [BudgetController::class, 'deleteBudgetExpense']);
     Route::resource('budget-templates', BudgetTemplateController::class);
     Route::post('search', [SearchController::class, 'runSearch']);
-    Route::get('types/bill', [TypeController::class, 'bill']);
+    Route::get('types/bill', [TypeController::class, 'index']);
     Route::get('user-profile', [UserController::class, 'updateUserProfile']);
 });
