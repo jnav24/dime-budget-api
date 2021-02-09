@@ -11,7 +11,7 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function bill()
+    public function index()
     {
         try {
             $billTypes = BillType::orderBy('slug')->get();

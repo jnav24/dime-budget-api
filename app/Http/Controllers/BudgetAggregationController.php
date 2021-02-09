@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class BudgetAggregationController extends Controller
 {
-    public function getYearlyAggregation()
+    public function index()
     {
         try {
             $data = Budget::where('user_id', auth()->user()->id)
@@ -36,7 +36,7 @@ class BudgetAggregationController extends Controller
         }
     }
 
-    public function getSingleYearAggregation($year)
+    public function show($year)
     {
         try {
             $aggregateData = [];

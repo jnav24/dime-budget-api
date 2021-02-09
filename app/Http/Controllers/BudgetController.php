@@ -16,7 +16,7 @@ use \Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    public function getAllBudgets()
+    public function index()
     {
         try {
             $data = Budget::where('user_id', auth()->user()->id)
@@ -48,7 +48,7 @@ class BudgetController extends Controller
         }
     }
 
-    public function getSingleBudgetExpenses($id)
+    public function show($id)
     {
         try {
             $sql = Budget::where('user_id', auth()->user()->id)
@@ -78,7 +78,7 @@ class BudgetController extends Controller
      * @param Request $request
      * @return Response|JsonResponse
      */
-    public function saveBudget(Request $request)
+    public function store(Request $request)
     {
         try {
             $request->validate($request, [
@@ -141,7 +141,7 @@ class BudgetController extends Controller
         }
     }
 
-    public function deleteBudget($id) {
+    public function destroy($id) {
         try {
             $types = BillType::all();
 

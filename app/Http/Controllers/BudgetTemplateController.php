@@ -16,7 +16,7 @@ class BudgetTemplateController extends Controller
      * @param Request $request
      * @return Response|JsonResponse
      */
-    public function deleteBudgetTemplate(Request $request)
+    public function destroy(Request $request)
     {
         try {
             if (!empty($request->all()) && is_array($request->all()[0])) {
@@ -34,7 +34,7 @@ class BudgetTemplateController extends Controller
         }
     }
 
-    public function getAllBudgetTemplates()
+    public function index()
     {
         try {
             $sql = BudgetTemplate::where('user_id', auth()->user()->id);
@@ -58,7 +58,7 @@ class BudgetTemplateController extends Controller
      * @param Request $request
      * @return Response|JsonResponse
      */
-    public function saveBudgetTemplates(Request $request)
+    public function store(Request $request)
     {
         try {
             if (empty($request->input('expenses'))) {
