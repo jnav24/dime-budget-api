@@ -81,7 +81,7 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate($request, [
+            $request->validate([
                 'name' => 'required',
                 'cycle' => 'required',
                 'expenses' => 'required',

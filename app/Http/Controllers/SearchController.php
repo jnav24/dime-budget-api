@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
@@ -17,7 +17,7 @@ class SearchController extends Controller
     {
         try {
             $types = BillType::all()->pluck('slug')->toArray();
-            $validated = $request->validate($request, [
+            $validated = $request->validate([
                 'billType' => [
                     'required',
                     'min:3',
