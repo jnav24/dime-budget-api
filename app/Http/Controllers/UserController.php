@@ -7,12 +7,45 @@ use App\Models\UserVehicle;
 use Illuminate\Http\JsonResponse;
 use \Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        try {
+            $user = auth()->user();
+            $verifyList = [];
+            // @todo figure out if i want to keep this code or not
+//            $device = UserDevice::getRequestedDevice($this->request, $user->id);
+
+//            if (empty($device)) {
+//                $device = $this->setUserDeviceRecord($user->id);
+//            }
+
+//            if ($this->isNotValidDevice($device)) {
+//                $verifyList = [
+//                    'token' => $device->verify_token,
+//                ];
+//            }
+
+            $userProfile = UserProfile::where('user_id', $user->id)->first()->toArray();
+            $vehicles = UserVehicle::where('user_id', $user->id)->get()->toArray();
+
+            return $this->respondWithOK([
+                'user' => [
+                        'email' => $user->username,
+                    ] + $userProfile,
+                'vehicles' => $vehicles,
+                'verify' => $verifyList,
+            ]);
+        } catch(\Exception $e) {
+            Log::debug('AuthController::currentUser - ' . $e->getMessage());
+            return $this->respondWithBadRequest([], 'Something unexpected has occurred');
+        }
+    }
+
     /**
      * @param Request $request
      * @return Response|JsonResponse
@@ -20,7 +53,7 @@ class UserController extends Controller
     public function updateUserProfile(Request $request)
     {
         try {
-            $request->validate($request, [
+            $request->validate([
                 'profile' => 'required',
                 'vehicles' => 'required|array'
             ]);
@@ -76,7 +109,9 @@ class UserController extends Controller
         }
 
         $token = $user->createToken($user->email);
-        Cookie::queue(Cookie::make(env('COOKIE_NAME', 'access_token'),  $token->plainTextToken, env('SESSION_LIFETIME', 120)));
-        return $this->respondWithOK();
+        return $this->respondWithOK([
+            'exp' => env('SESSION_LIFETIME', 120),
+            'token' => $token->plainTextToken,
+        ]);
     }
 }
