@@ -30,4 +30,5 @@ Route::middleware(['auth:sanctum', 'verify.session'])->group(function () {
     Route::post('search', [SearchController::class, 'runSearch']);
     Route::get('types/bill', [TypeController::class, 'index']);
     Route::get('user-profile', [UserController::class, 'updateUserProfile']);
+    Route::get('user', [UserController::class, 'index']);
 });
