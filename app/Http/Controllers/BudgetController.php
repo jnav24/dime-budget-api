@@ -288,7 +288,7 @@ class BudgetController extends Controller
      * @param array $item
      * @return boolean
      */
-    private function canAddAmount($item)
+    private function canAddAmount(array $item): bool
     {
         $result = false;
 
