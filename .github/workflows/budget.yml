@@ -20,3 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
+      
+    - name: Setup Env
+      run: |
+        cp ${{ secrets.ENV_SETUP }} $GITHUB_WORKSPACE/.env
