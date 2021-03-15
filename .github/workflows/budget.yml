@@ -24,3 +24,7 @@ jobs:
     - name: Setup Env
       run: |
         cp ${{ secrets.ENV_SETUP }} $GITHUB_WORKSPACE/.env
+        
+    - name: Setup Storage
+      run: |
+        ln -sfn ${{ secrets.STORAGE_SETUP }} storage
