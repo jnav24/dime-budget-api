@@ -12,6 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Setup Storage
+      run: |
+        ln -sfn ${{ secrets.STORAGE_SETUP }} storage
+    
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
@@ -24,7 +28,3 @@ jobs:
     - name: Setup Env
       run: |
         cp ${{ secrets.ENV_SETUP }} $GITHUB_WORKSPACE/.env
-        
-    - name: Setup Storage
-      run: |
-        ln -sfn ${{ secrets.STORAGE_SETUP }} storage
