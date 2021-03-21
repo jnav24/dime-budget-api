@@ -104,7 +104,7 @@ class BudgetController extends Controller
             );
 
             if (empty($id)) {
-                $expenses['incomes'] = $this->generatePaidExpenses($expenses['incomes']);
+                $expenses['incomes'] = $this->generatePaidExpenses($request, $expenses['incomes']);
             }
 
             $budget->updated_at = Carbon::now()->format('Y-m-d H:i:s');
