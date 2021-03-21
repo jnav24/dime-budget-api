@@ -18,6 +18,9 @@ jobs:
     
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      
+    - name: Update Composer
+      run: composer update
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
