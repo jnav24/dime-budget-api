@@ -29,5 +29,5 @@ Route::middleware(['auth:sanctum', 'verify.session'])->group(function () {
     Route::resource('budget-templates', BudgetTemplateController::class);
     Route::post('search', [SearchController::class, 'runSearch']);
     Route::get('types/bill', [TypeController::class, 'index']);
-    Route::get('user-profile', [UserController::class, 'updateUserProfile']);
+    Route::get('user-profile', [UserController::class, 'index']);
 });
