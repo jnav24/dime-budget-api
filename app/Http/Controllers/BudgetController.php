@@ -418,7 +418,6 @@ class BudgetController extends Controller
     /**
      * Get bi-weekly pay periods for a billing cycle; called dynamically from generatePaidExpenses()
      *
-     * @param Request $request
      * @param array $job {
      *      @value string ['id']; a temp id is expected
      *      @value string ['name']
@@ -435,11 +434,11 @@ class BudgetController extends Controller
      *      @value Datetime ['initial_pay_date']
      * }
      */
-    private function get_bi_weekly(Request $request, $job, $startPay, $currentMonth)
+    private function get_bi_weekly($job, $startPay, $currentMonth)
     {
         $results = [];
 
-        $nextMonth = Carbon::createFromTimeString($request->input('cycle'))->addMonth();
+        $nextMonth = (clone $currentMonth)->addMonth();
         $endWeek = $nextMonth->weekOfYear;
         $startWeek = $currentMonth->weekOfYear;
         $payWeek = clone $currentMonth;
