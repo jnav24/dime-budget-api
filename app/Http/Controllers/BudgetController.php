@@ -438,7 +438,7 @@ class BudgetController extends Controller
     {
         $results = [];
 
-        $nextMonth = $currentMonth->addMonth();
+        $nextMonth = (clone $currentMonth)->addMonth();
         $endWeek = $nextMonth->weekOfYear;
         $startWeek = $currentMonth->weekOfYear;
         $payWeek = clone $currentMonth;
