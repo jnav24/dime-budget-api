@@ -94,6 +94,7 @@ class BudgetController extends Controller
             $expenses = $request->input('expenses');
             $id = $request->input('id', null);
 
+            DB::beginTransaction();
             $budget = Budget::firstOrCreate(
                 ['id' => $id],
                 [
@@ -123,6 +124,7 @@ class BudgetController extends Controller
                 return $value->type === 'saved';
             });
 
+            DB::commit();
             return $this->respondWithOK([
                 'budget' => [
                     'id' => $budget->id,
@@ -136,6 +138,7 @@ class BudgetController extends Controller
         } catch (ValidationException $e) {
             return $this->respondWithBadRequest($e->errors(), 'Errors validating request.');
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('BudgetController::saveBudget - ' . $e->getMessage());
             return $this->respondWithBadRequest([], 'Unable to save budget at this time.');
         }
