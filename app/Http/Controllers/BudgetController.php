@@ -305,16 +305,13 @@ class BudgetController extends Controller
 
     private function saveAggregation($budgetId, $type, $total): void
     {
-        BudgetAggregation::firstOrCreate(
-            [
-                'budget_id' => $budgetId,
-                'type' => $type,
-                'user_id' => auth()->user()->id
-            ],
-            [
-                'value' => $total,
-            ]
-        );
+        $aggregate = BudgetAggregation::firstOrCreate([
+            'budget_id' => $budgetId,
+            'type' => $type,
+            'user_id' => auth()->user()->id,
+        ]);
+        $aggregate->value = $total;
+        $aggregate->save();
     }
 
     /**
