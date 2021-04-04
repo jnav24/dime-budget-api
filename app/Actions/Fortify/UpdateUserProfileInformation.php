@@ -21,8 +21,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         // @todo change 'name' to be 'first_name' and 'last_name'
         // @todo save name fields to the UserProfile
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -36,8 +36,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
+            $user->profile->forceFill([
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+            ])->save();
             $user->forceFill([
-                'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();
         }
@@ -54,8 +57,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         // @todo change 'name' to be 'first_name' and 'last_name'
         // @todo save name fields to the UserProfile
+        $user->profile->forceFill([
+            'first_name' => $input['first_name'],
+            'last_name' => $input['last_name'],
+        ])->save();
         $user->forceFill([
-            'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
         ])->save();

@@ -35,7 +35,7 @@ class UserController extends Controller
 
             return $this->respondWithOK([
                 'user' => [
-                        'email' => $user->username,
+                        'email' => $user->email,
                     ] + $userProfile,
                 'vehicles' => $vehicles,
                 'verify' => $verifyList,
