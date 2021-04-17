@@ -24,7 +24,9 @@ return [
         'user/password',
         'user/profile-information',
         'user/two-factor-authentication',
-        'user/confirm-password'
+        'user/confirm-password',
+        'user/two-factor-recovery-codes',
+        'user/two-factor-qr-code',
     ],
 
     'allowed_methods' => ['*'],
