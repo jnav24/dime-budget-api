@@ -35,6 +35,7 @@ class UserController extends Controller
 
             return $this->respondWithOK([
                 'user' => [
+                        'mfa_enabled' => !empty($user->two_factor_secret),
                         'email' => $user->email,
                     ] + $userProfile,
                 'vehicles' => $vehicles,
