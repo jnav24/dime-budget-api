@@ -19,12 +19,14 @@ class BudgetTemplateController extends Controller
     public function destroy(Request $request)
     {
         try {
-            if (!empty($request->all()) && is_array($request->all()[0])) {
-                foreach ($request->all() as $budgetTemplate) {
-                    $this->deleteCurrentBudgetTemplate($budgetTemplate);
+            if (!empty($request->all())) {
+                if (is_array($request->all()[0])) {
+                    foreach ($request->all() as $budgetTemplate) {
+                        $this->deleteCurrentBudgetTemplate($budgetTemplate);
+                    }
+                } else {
+                    $this->deleteCurrentBudgetTemplate($request->all());
                 }
-            } else {
-                $this->deleteCurrentBudgetTemplate($request->all());
             }
 
             return $this->respondWithOK([]);
