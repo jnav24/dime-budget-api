@@ -338,30 +338,11 @@ class BudgetController extends Controller
     {
         $currentMonth = Carbon::createFromTimeString($cycle);
         $results = [];
-        $budget = Budget::with(['incomes'])
-            ->where('user_id', auth()->user()->id)
-            ->orderByDesc('id')
-            ->take(1)
-            ->skip(1)
-            ->get()
-            ->shift();
 
         foreach ($expenses as $job) {
             $type = IncomeType::find($job['income_type_id']);
             $startPay = Carbon::createFromTimeString($job['initial_pay_date']);
             $method = 'get_' . $this->convertSlugToSnakeCase($type->slug);
-
-            if ($budget && $budget->incomes) {
-                foreach ($budget->incomes as $income) {
-                    if (
-                        $income->name === $job['name'] &&
-                        $income->income_type_id === $job['income_type_id'] &&
-                        ($newStartPay = Carbon::parse($income->initial_pay_date))->gt($startPay)
-                    ) {
-                        $startPay = $newStartPay;
-                    }
-                }
-            }
 
             if (method_exists($this, $method)) {
                 $results = array_merge($results, $this->{$method}($job, $startPay, $currentMonth));
