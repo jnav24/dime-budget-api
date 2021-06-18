@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BillType;
 use App\Models\BudgetAggregation;
 use App\Models\Budget;
-use App\Models\IncomeType;
+use App\Services\IncomeService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -78,7 +78,7 @@ class BudgetController extends Controller
      * @param Request $request
      * @return Response|JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, IncomeService $incomeService)
     {
         try {
             $request->validate([
@@ -105,7 +105,7 @@ class BudgetController extends Controller
             );
 
             if (empty($id)) {
-                $expenses['incomes'] = $this->generatePaidExpenses($request->input('cycle'), $expenses['incomes']);
+                $expenses['incomes'] = $incomeService->generatePaidExpenses($request->input('cycle'), $expenses['incomes']);
             }
 
             $budget->updated_at = Carbon::now()->format('Y-m-d H:i:s');
@@ -315,241 +315,5 @@ class BudgetController extends Controller
         ]);
         $aggregate->value = $total;
         $aggregate->save();
-    }
-
-    /**
-     * For employment, create a record for all pay dates in a billing cycle based on user input
-     *
-     * @param string $cycle
-     * @param array $expenses {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     * @return array {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     */
-    private function generatePaidExpenses(string $cycle, array $expenses)
-    {
-        $currentMonth = Carbon::createFromTimeString($cycle);
-        $results = [];
-
-        foreach ($expenses as $job) {
-            $type = IncomeType::find($job['income_type_id']);
-            $startPay = Carbon::createFromTimeString($job['initial_pay_date']);
-            $method = 'get_' . $this->convertSlugToSnakeCase($type->slug);
-
-            if (method_exists($this, $method)) {
-                $results = array_merge($results, $this->{$method}($job, $startPay, $currentMonth));
-            } else {
-                $results = array_merge($results, $job);
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get weekly pay periods for a billing cycle; called dynamically from generatePaidExpenses()
-     *
-     * @param array $job {
-     *      @value integer | string ['id']
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     * @param Carbon $startPay
-     * @param Carbon $currentMonth
-     * @return array {
-     *      @value integer | string ['id']
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     */
-    private function get_weekly($job, $startPay, $currentMonth)
-    {
-        $results = [];
-
-        $day = $startPay->format('D');
-        $month = $currentMonth->format('M');
-        $initialDate = $startPay;
-
-        for ($i = 1; $i < 8; $i++) {
-            $date = Carbon::createFromTimeString($currentMonth->format('Y-m') . '-0' . $i .' 00:00:00');
-
-            if ($date->format('D') === $day) {
-                $initialDate = $date;
-            }
-        }
-
-        $currentMonthWeek = $currentMonth->weekOfYear;
-
-        if ($currentMonth->format('M') === 'Dec') {
-            $nextMonthWeek = 52;
-        } else {
-            $nextMonthWeek = $currentMonth->addMonth()->weekOfYear;
-        }
-
-        for ($i = 0; $i <= ($nextMonthWeek-$currentMonthWeek); $i++) {
-            if ($initialDate->format('M') === $month) {
-                $results[] = [
-                    'id' => $job['id'],
-                    'name' => $job['name'],
-                    'amount' => $job['amount'],
-                    'income_type_id' => $job['income_type_id'],
-                    'initial_pay_date' => $initialDate->toDateTimeString(),
-                ];
-            }
-
-            $initialDate->addDays(7);
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get bi-weekly pay periods for a billing cycle; called dynamically from generatePaidExpenses()
-     *
-     * @param array $job {
-     *      @value string ['id']; a temp id is expected
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     * @param Carbon $startPay
-     * @param Carbon $currentMonth
-     * @return array {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     */
-    private function get_bi_weekly($job, $startPay, $currentMonth)
-    {
-        $results = [];
-
-        $nextMonth = (clone $currentMonth)->addMonth();
-        $endWeek = $nextMonth->weekOfYear;
-        $startWeek = $currentMonth->weekOfYear;
-        $payWeek = clone $currentMonth;
-
-        $addDays = ($startPay->dayOfWeek - $payWeek->dayOfWeek);
-
-        if ($startPay->dayOfWeek < $payWeek->dayOfWeek) {
-            $addDays = (7 - $payWeek->dayOfWeek) + $startPay->dayOfWeek;
-        }
-
-        $payWeek->addDays($addDays);
-        $totalWeeks = ($payWeek->weekOfYear - $startPay->weekOfYear);
-
-        if ($totalWeeks % 2) {
-            $payWeek->addDays(7);
-        }
-
-        if ($startWeek > 52) {
-            $startWeek = 1;
-        }
-
-        if ($currentMonth->format('M') === 'Dec') {
-            $endWeek = 52;
-        }
-
-        for ($i = 0; $i <= ($endWeek - $startWeek); $i = ($i+2)) {
-            if ($currentMonth->format('M') === $payWeek->format('M')) {
-                $results[] = [
-                    'id' => $job['id'],
-                    'name' => $job['name'],
-                    'amount' => $job['amount'],
-                    'income_type_id' => $job['income_type_id'],
-                    'initial_pay_date' => $payWeek->toDateTimeString(),
-                    'int' => $i,
-                ];
-                $payWeek->addDays(14);
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get semi-monthly pay periods for a billing cycle; called dynamically from generatePaidExpenses()
-     *
-     * @param array $job {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     * @param Carbon $startPay
-     * @param Carbon $currentMonth
-     * @return array {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     */
-    private function get_semi_monthly($job, $startPay, $currentMonth)
-    {
-        $results = [];
-        $dates = [
-            $currentMonth->format('Y-m') . '-15 00:00:00',
-            $currentMonth->endOfMonth()->toDateTimeString(),
-        ];
-
-        foreach ($dates as $date) {
-            $job['initial_pay_date'] = $date;
-            $results[] = $job;
-        }
-
-        return $results;
-    }
-
-    /**
-     * Get monthly pay periods for a billing cycle; called dynamically from generatePaidExpenses()
-     *
-     * @param array $job {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     * @param Carbon $startPay
-     * @param Carbon $currentMonth
-     * @return array {
-     *      @value string ['name']
-     *      @value string ['amount']
-     *      @value integer ['income_type_id']
-     *      @value Datetime ['initial_pay_date']
-     * }
-     */
-    private function get_monthly($job, $startPay, $currentMonth)
-    {
-        $newPayPeriod = $startPay->addMonth();
-        $date = $newPayPeriod;
-
-        if ($newPayPeriod->format('Y-m') !== $currentMonth->format('Y-m')) {
-            $day = $startPay->format('d');
-            $currentCycle = $currentMonth->format('Y-m');
-            $date = Carbon::createFromTimeString($currentCycle . '-' . $day . ' 00:00:00');
-        }
-
-        return [
-            'id' => $job['id'],
-            'name' => $job['name'],
-            'amount' => $job['amount'],
-            'income_type_id' => $job['income_type_id'],
-            'initial_pay_date' => $date->toDateTimeString(),
-        ];
     }
 }
