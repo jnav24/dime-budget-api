@@ -105,7 +105,7 @@ class BudgetController extends Controller
             );
 
             if (empty($id)) {
-                $expenses['incomes'] = $this->generatePaidExpenses($request, $expenses['incomes']);
+                $expenses['incomes'] = $this->generatePaidExpenses($request->input('cycle'), $expenses['incomes']);
             }
 
             $budget->updated_at = Carbon::now()->format('Y-m-d H:i:s');
@@ -320,7 +320,7 @@ class BudgetController extends Controller
     /**
      * For employment, create a record for all pay dates in a billing cycle based on user input
      *
-     * @param Request $request
+     * @param string $cycle
      * @param array $expenses {
      *      @value string ['name']
      *      @value string ['amount']
@@ -334,15 +334,34 @@ class BudgetController extends Controller
      *      @value Datetime ['initial_pay_date']
      * }
      */
-    private function generatePaidExpenses(Request $request, $expenses)
+    private function generatePaidExpenses(string $cycle, array $expenses)
     {
-        $currentMonth = Carbon::createFromTimeString($request->input('cycle'));
+        $currentMonth = Carbon::createFromTimeString($cycle);
         $results = [];
+        $budget = Budget::with(['incomes'])
+            ->where('user_id', auth()->user()->id)
+            ->orderByDesc('id')
+            ->take(1)
+            ->skip(1)
+            ->get()
+            ->shift();
 
         foreach ($expenses as $job) {
             $type = IncomeType::find($job['income_type_id']);
             $startPay = Carbon::createFromTimeString($job['initial_pay_date']);
             $method = 'get_' . $this->convertSlugToSnakeCase($type->slug);
+
+            if ($budget && $budget->incomes) {
+                foreach ($budget->incomes as $income) {
+                    if (
+                        $income->name === $job['name'] &&
+                        $income->income_type_id === $job['income_type_id'] &&
+                        ($newStartPay = Carbon::parse($income->initial_pay_date))->gt($startPay)
+                    ) {
+                        $startPay = $newStartPay;
+                    }
+                }
+            }
 
             if (method_exists($this, $method)) {
                 $results = array_merge($results, $this->{$method}($job, $startPay, $currentMonth));
