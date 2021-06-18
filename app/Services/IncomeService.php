@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Models\IncomeTemplate;
 use App\Models\IncomeType;
+use App\Traits\DimeUtils;
 use Carbon\Carbon;
 
 class IncomeService
 {
+    use DimeUtils;
+
     /**
      * For employment, create a record for all pay dates in a billing cycle based on user input
      *
