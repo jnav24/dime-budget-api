@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BillType;
+use App\Traits\DimeUtils;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -12,23 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, APIResponse;
-
-    /**
-     * Checks if id is temp id or not
-     *
-     * @param $id
-     * @return bool
-     */
-    protected function isNotTempId($id)
-    {
-        return (stripos($id, 'temp_') === false);
-    }
-
-    protected function convertSlugToSnakeCase(string $string): string
-    {
-        return str_replace('-', '_', $string);
-    }
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, APIResponse, DimeUtils;
 
     /**
      * Save all expenses; works on template expenses as well
