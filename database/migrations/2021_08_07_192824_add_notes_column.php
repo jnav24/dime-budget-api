@@ -19,7 +19,7 @@ class AddNotesColumn extends Migration
         'miscellaneous',
         'personal',
         'shopping',
-        'subscription',
+        'subscriptions',
         'tax',
         'travel',
         'utilities',
