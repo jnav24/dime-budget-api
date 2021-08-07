@@ -34,7 +34,7 @@ class AddNotesColumn extends Migration
     public function up()
     {
         foreach ($this->tables as $name) {
-            if (!Schema::hasColumn($name)) {
+            if (!Schema::hasColumn($name, 'notes')) {
                 Schema::table($name, function (Blueprint $table) {
                     $table->text('notes')->nullable();
                 });
