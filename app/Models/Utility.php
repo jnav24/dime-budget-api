@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $paid_date
  * @property string|null $confirmation
+ * @property string|null $notes
  * @property-read \App\Models\UtilityType|null $type
  * @method static \Illuminate\Database\Eloquent\Builder|Utility newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utility newQuery()
@@ -39,6 +40,7 @@ class Utility extends Model
         'paid_date' => null,
         'confirmation' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -54,6 +56,7 @@ class Utility extends Model
         'paid_date',
         'confirmation',
         'budget_id',
+        'notes',
     ];
 
     /**

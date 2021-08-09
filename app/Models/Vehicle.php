@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $not_track_amount
+ * @property string|null $notes
  * @property string $balance
  * @property-read \App\Models\VehicleType|null $type
  * @property-read \App\Models\UserVehicle|null $userVehicle
@@ -46,6 +47,7 @@ class Vehicle extends Model
         'not_track_amount' => null,
         'balance' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -64,6 +66,7 @@ class Vehicle extends Model
         'not_track_amount',
         'balance',
         'budget_id',
+        'notes',
     ];
 
     /**
