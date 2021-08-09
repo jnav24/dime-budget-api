@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $amount
  * @property string|null $confirmation
  * @property int $not_track_amount
+ * @property string|null $notes
  * @property int $due_date
  * @property string|null $paid_date
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -41,6 +42,7 @@ class Gift extends Model
         'not_track_amount' => null,
         'gift_type_id' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -57,6 +59,7 @@ class Gift extends Model
         'not_track_amount',
         'gift_type_id',
         'budget_id',
+        'notes',
     ];
 
     /**

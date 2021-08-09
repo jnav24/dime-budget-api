@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null $confirmation
  * @property string|null $amount
  * @property string|null $balance
+ * @property string|null $notes
  * @property-read \App\Models\CreditCardType|null $type
  * @method static \Illuminate\Database\Eloquent\Builder|CreditCard newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CreditCard newQuery()
@@ -51,6 +52,7 @@ class CreditCard extends Model
         'confirmation' => null,
         'balance' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -72,6 +74,7 @@ class CreditCard extends Model
         'confirmation',
         'balance',
         'budget_id',
+        'notes',
     ];
 
     /**

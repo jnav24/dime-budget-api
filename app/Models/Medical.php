@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null $paid_date
  * @property string|null $confirmation
  * @property int $not_track_amount
+ * @property string|null $notes
  * @property-read \App\Models\MedicalType|null $type
  * @method static \Illuminate\Database\Eloquent\Builder|Medical newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Medical newQuery()
@@ -41,6 +42,7 @@ class Medical extends Model
         'confirmation' => null,
         'not_track_amount' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -57,6 +59,7 @@ class Medical extends Model
         'confirmation',
         'not_track_amount',
         'budget_id',
+        'notes',
     ];
 
     /**

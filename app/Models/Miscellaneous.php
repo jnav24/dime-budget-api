@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $paid_date
  * @property string|null $confirmation
  * @property int $not_track_amount
+ * @property string|null $notes
  * @method static \Illuminate\Database\Eloquent\Builder|Miscellaneous newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Miscellaneous newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Miscellaneous query()
@@ -37,6 +38,7 @@ class Miscellaneous extends Model
         'confirmation' => null,
         'not_track_amount' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -52,6 +54,7 @@ class Miscellaneous extends Model
         'confirmation',
         'not_track_amount',
         'budget_id',
+        'notes',
     ];
 
     /**

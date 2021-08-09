@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $not_track_amount
  * @property int $due_date
  * @property string|null $paid_date
+ * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\ChildcareType|null $type
@@ -41,6 +42,7 @@ class Childcare extends Model
         'not_track_amount' => null,
         'childcare_type_id' => null,
         'budget_id' => null,
+        'notes' => null,
     ];
 
     /**
@@ -57,6 +59,7 @@ class Childcare extends Model
         'not_track_amount',
         'childcare_type_id',
         'budget_id',
+        'notes',
     ];
 
     /**
