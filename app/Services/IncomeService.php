@@ -261,11 +261,13 @@ class IncomeService
         }
 
         return [
-            'id' => $job['id'],
-            'name' => $job['name'],
-            'amount' => $job['amount'],
-            'income_type_id' => $job['income_type_id'],
-            'initial_pay_date' => $date->toDateTimeString(),
+            [
+                'id' => $job['id'],
+                'name' => $job['name'],
+                'amount' => $job['amount'],
+                'income_type_id' => $job['income_type_id'],
+                'initial_pay_date' => $date->toDateTimeString(),
+            ]
         ];
     }
 }
