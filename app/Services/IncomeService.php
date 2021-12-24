@@ -155,43 +155,24 @@ class IncomeService
     {
         $results = [];
         $nextMonth = (clone $currentMonth)->addMonth();
-        $endWeek = $nextMonth->weekOfYear;
-        $startWeek = $currentMonth->weekOfYear;
-        $payWeek = clone $currentMonth;
+        $queued_date = clone $startPay;
+        $run = true;
 
-        $addDays = ($startPay->dayOfWeek - $payWeek->dayOfWeek);
+        while ($run) {
+            $queued_date->addDays(14);
 
-        if ($startPay->dayOfWeek < $payWeek->dayOfWeek) {
-            $addDays = (7 - $payWeek->dayOfWeek) + $startPay->dayOfWeek;
-        }
-
-        $payWeek->addDays($addDays);
-        $totalWeeks = ($payWeek->weekOfYear - $startPay->weekOfYear);
-
-        if ($totalWeeks % 2) {
-            $payWeek->addDays(7);
-        }
-
-        if ($startWeek > 52) {
-            $startWeek = 1;
-        }
-
-        if ($currentMonth->format('M') === 'Dec') {
-            $endWeek = 52;
-        }
-
-        for ($i = 0; $i <= ($endWeek - $startWeek); $i = ($i+2)) {
-            if ($currentMonth->format('M') === $payWeek->format('M')) {
+            if ($nextMonth->format('m') === $queued_date->format('m')) {
                 $results[] = [
                     'id' => $job['id'],
                     'name' => $job['name'],
                     'amount' => $job['amount'],
                     'income_type_id' => $job['income_type_id'],
-                    'initial_pay_date' => $payWeek->toDateTimeString(),
-                    'int' => $i,
+                    'initial_pay_date' => $queued_date->toDateTimeString(),
                 ];
-                $payWeek->addDays(14);
+                continue;
             }
+
+            $run = false;
         }
 
         return $results;
