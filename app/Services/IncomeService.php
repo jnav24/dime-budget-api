@@ -6,6 +6,7 @@ use App\Models\IncomeTemplate;
 use App\Models\IncomeType;
 use App\Traits\DimeUtils;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class IncomeService
 {
@@ -32,11 +33,13 @@ class IncomeService
     {
         $currentMonth = Carbon::createFromTimeString($cycle);
         $results = [];
+        Log::debug('generatePaidExpenses job ' . json_encode($expenses));
 
         foreach ($expenses as $job) {
             $type = IncomeType::find($job['income_type_id']);
             $startPay = Carbon::createFromTimeString($job['initial_pay_date']);
             $method = 'get_' . $this->convertSlugToSnakeCase($type->slug);
+            Log::debug('generatePaidExpenses method ' . $method);
 
             if (method_exists($this, $method)) {
                 $results = array_merge($results, $this->{$method}($job, $startPay, $currentMonth));
@@ -44,10 +47,11 @@ class IncomeService
                 $results = array_merge($results, $job);
             }
 
+            Log::debug('generatePaidExpenses results loop ' . json_encode($results));
             $this->updateIncomeTemplate($results[count($results) - 1]);
         }
 
-
+        Log::debug('generatePaidExpenses results ' . json_encode($results));
         return $results;
     }
 
