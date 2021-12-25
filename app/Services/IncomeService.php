@@ -165,7 +165,7 @@ class IncomeService
         while ($run) {
             $queued_date->addDays(14);
 
-            if ($nextMonth->format('m') === $queued_date->format('m')) {
+            if ((int)$queued_date->format('m') < (int)$nextMonth->format('m')) {
                 $results[] = [
                     'id' => $job['id'],
                     'name' => $job['name'],
