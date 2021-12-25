@@ -110,9 +110,10 @@ class BudgetController extends Controller
 
             $budget->updated_at = Carbon::now()->format('Y-m-d H:i:s');
             $budget->save();
+            Log::debug('Budget saved.');
             $types = BillType::all();
             $returnExpenses = $this->saveExpenses($budget->id, $expenses);
-
+            Log::debug('Expenses saved.');
             $this->setupAndSaveAggregation(
                 $budget->id,
                 $expenses,
@@ -120,9 +121,11 @@ class BudgetController extends Controller
                     return !$type->save_type;
                 })->pluck('slug')->toArray()
             );
+            Log::debug('Aggregations saved.');
             $saved = $budget->aggregations->filter(function ($value, $key) {
                 return $value->type === 'saved';
             });
+            Log::debug('Aggregation Filter ' . json_encode($saved));
 
             DB::commit();
             return $this->respondWithOK([
